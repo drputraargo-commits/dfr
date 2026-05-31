@@ -1,6 +1,8 @@
+import subprocess
 import torchvision
 import torch
 
+subprocess.run(["bash", "slscpu"], check=True)
 model = torchvision.models.resnet18(pretrained=True)
 model.eval()
 inp = torch.rand(1, 3, 224, 224)
