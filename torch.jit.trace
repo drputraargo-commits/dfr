@@ -21,6 +21,6 @@ model.eval()
 example_input = torch.randn(args.batch_size, args.input_dim)
 
 traced_model = torch.jit.trace(model, example_input)
-traced_model.save("model.pt")
+traced_model.save("model.pth")
 
 print(f"Traced with input shape {tuple(example_input.shape)}")
