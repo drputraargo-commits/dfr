@@ -1,0 +1,26 @@
+import argparse
+import torch
+import torch.nn as nn
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--batch-size", type=int, default=1)
+parser.add_argument("--input-dim", type=int, default=10)
+args = parser.parse_args()
+
+class SimpleNet(nn.Module):
+    def __init__(self, input_dim):
+        super().__init__()
+        self.fc = nn.Linear(input_dim, 2)
+
+    def forward(self, x):
+        return self.fc(x)
+
+model = SimpleNet(args.input_dim)
+model.eval()
+
+example_input = torch.randn(args.batch_size, args.input_dim)
+
+traced_model = torch.jit.trace(model, example_input)
+traced_model.save("model.pt")
+
+print(f"Traced with input shape {tuple(example_input.shape)}")
